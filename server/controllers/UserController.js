@@ -75,6 +75,8 @@ const createUser = async email => {
     returnData.isError = false;
     returnData.data = createdUser;
 
+    // TODO: Send account creation cum email verification email
+
     return returnData;
   } catch (error) {
     returnData.message = "User could not be created!";

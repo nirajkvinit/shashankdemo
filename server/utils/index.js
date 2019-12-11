@@ -11,7 +11,7 @@ const getLogger = (moduleName = "Logger") => {
 const messageFormat = () => {
   let mformat = {
     isError: true,
-    message: "",
+    message: "Error occured!",
     data: null
   };
 
