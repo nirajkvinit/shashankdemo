@@ -22,6 +22,10 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+  usersecret: {
+    type: String,
+    default: shortid.generate
+  },
   isadmin: {
     type: String,
     default: "no"

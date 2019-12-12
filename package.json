@@ -7,7 +7,9 @@
     "production": "NODE_ENV=production node index.js",
     "start": "NODE_ENV=production node index.js",
     "developer": "NODE_ENV=development nodemon index.js",
-    "test": "NODE_ENV=test mocha './**/*.spec.js' --exit"
+    "test": "NODE_ENV=test mocha './**/*.spec.js' --exit",
+    "todo": "leasot 'server/**/*.js'",
+    "todo-ci": "leasot -x --reporter markdown 'server/**/*.js' > TODO.md"
   },
   "keywords": [],
   "author": "Niraj Kumar - nirajkvinit@gmail.com",
@@ -35,9 +37,10 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "leasot": "^9.3.1",
     "mocha": "^6.2.2",
+    "nodemon": "^2.0.1",
     "sinon": "^7.5.0",
-    "supertest": "^4.0.2",
-    "nodemon": "^2.0.1"
+    "supertest": "^4.0.2"
   }
 }

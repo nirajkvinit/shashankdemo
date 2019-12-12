@@ -15,16 +15,18 @@ const cleanUserData = user => {
     "recoverykey",
     "created"
   ];
+  let returnUser = null;
 
   if (!isEmpty(user)) {
-    Object.keys(user).forEach(key => {
+    returnUser = { ...user };
+    Object.keys(returnUser).forEach(key => {
       if (keysToRemove.includes(key)) {
-        delete user[key];
+        delete returnUser[key];
       }
     });
   }
 
-  return user;
+  return returnUser;
 };
 
 // get user from DB
@@ -32,21 +34,18 @@ const fetchUserFromDB = async email => {
   const returnData = messageFormat();
 
   if (isEmpty(email) || !Validator.isEmail(email)) {
-    returnData.message = "email address is empty or invalid";
-    return returnData;
-  }
+    returnData.message = "Email address is empty or invalid";
+  } else {
+    try {
+      let userData = await User.findOne({ email });
 
-  let userData = null;
-
-  try {
-    userData = await User.findOne({ email });
-
-    returnData.message = "Fetched Data from db successfully!";
-    returnData.isError = false;
-    returnData.data = isEmpty(userData) ? null : userData.toObject();
-  } catch (error) {
-    returnData.message = "Error occured while fetching user";
-    returnData.data = error;
+      returnData.message = "Fetched Data from db successfully!";
+      returnData.isError = false;
+      returnData.data = isEmpty(userData) ? null : userData.toObject();
+    } catch (error) {
+      returnData.message = "Error occured while fetching user";
+      returnData.data = error;
+    }
   }
 
   return returnData;
@@ -75,7 +74,7 @@ const createUser = async email => {
     returnData.isError = false;
     returnData.data = createdUser;
 
-    // TODO: Send account creation cum email verification email
+    // TODO: Send account creation cum email address verification email
 
     return returnData;
   } catch (error) {

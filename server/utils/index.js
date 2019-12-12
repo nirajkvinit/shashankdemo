@@ -1,5 +1,6 @@
-const isEmpty = require("./isEmpty");
+const jwt = require("jsonwebtoken");
 const log4js = require("log4js");
+const isEmpty = require("./isEmpty");
 const Cache = require("./cache");
 
 const getLogger = (moduleName = "Logger") => {
@@ -23,6 +24,25 @@ let docExt =
 let musicExt = ".mid,.midi,.mp3,.mpa,.ogg,.wav,.wma";
 let imageExt = "ai,.bmp,.gif,.ico,.jpeg,.jpg,.png,.ps,.psd,.svg,.tif,.tiff";
 
+const getUserSecret = user => {
+  let userSecret = process.env.SECRET_OR_KEY;
+  if (!isEmpty(user.usersecret)) {
+    userSecret += user.usersecret;
+  }
+  return userSecret;
+};
+
+const jwtSigner = (payload, userSecret, expiresIn) =>
+  new Promise(function(resolve, reject) {
+    jwt.sign(payload, userSecret, { expiresIn }, (err, token) => {
+      if (isEmpty(err)) {
+        resolve(token);
+      } else {
+        reject(err);
+      }
+    });
+  });
+
 module.exports = {
   isEmpty,
   getLogger,
@@ -30,5 +50,7 @@ module.exports = {
   messageFormat,
   docExt,
   musicExt,
-  imageExt
+  imageExt,
+  getUserSecret,
+  jwtSigner
 };
