@@ -19,7 +19,7 @@ if (process.env.NODE_ENV === "production") {
 // APP_DIR Global variable
 global.APP_DIR = path.join(__dirname, "./");
 
-const usersRouter = require("./routes/v1api/users");
+const usersRouter = require("./server/routes/v1api/users");
 
 const { isEmpty, Cache, getLogger } = require("./server/utils");
 const logger = getLogger("main-app"); // get logger

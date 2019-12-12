@@ -18,9 +18,17 @@ const messageFormat = () => {
   return { ...mformat };
 };
 
+let docExt =
+  ".doc,.docx,.odt,.pdf,.xls,.xlsx,.ods,.ppt,.pptx,.txt,.odp,.pps,.rtf,.tex";
+let musicExt = ".mid,.midi,.mp3,.mpa,.ogg,.wav,.wma";
+let imageExt = "ai,.bmp,.gif,.ico,.jpeg,.jpg,.png,.ps,.psd,.svg,.tif,.tiff";
+
 module.exports = {
   isEmpty,
   getLogger,
   Cache,
-  messageFormat
+  messageFormat,
+  docExt,
+  musicExt,
+  imageExt
 };

@@ -1,0 +1,6 @@
+documents - .doc,.docx,.odt,.pdf,.xls,.xlsx,.ods,.ppt,.pptx,.txt,.odp,.pps,.rtf,.tex
+Audio - .mid,.midi,.mp3,.mpa,.ogg,.wav,.wma
+compressed - zip,.tar.gz,.rar,.7z
+Images - .ai,.bmp,.gif,.ico,.jpeg,.jpg,.png,.ps,.psd,.svg,.tif,.tiff
+
+.doc,.docx,.odt,.pdf,.xls,.xlsx,.ods,.ppt,.pptx,.txt,.odp,.pps,.rtf,.tex,.mid,.midi,.mp3,.mpa,.ogg,.wav,.wma,zip,.tar.gz,.rar,.7z,.ai,.bmp,.gif,.ico,.jpeg,.jpg,.png,.ps,.psd,.svg,.tif,.tiff

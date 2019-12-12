@@ -3,6 +3,8 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
+const multer = require("multer");
+const path = require("path");
 
 const { getLogger, isEmpty, messageFormat } = require("../../utils");
 const logger = getLogger("routes/v1api/users");
@@ -13,16 +15,27 @@ const validateRegisterInput = require("../../validation/register");
 //Load User Model
 const User = require("../../models/User");
 
-let {
+const {
   fetchUserFromDB,
   createUser,
   cleanUserData
 } = require("../../controllers/UserController");
 
+const { createArtifact } = require("../../controllers/ArtifactController");
+
+const uploadDir = process.env.UPLOAD_DIR;
+
+const upload = multer({
+  dest: uploadDir,
+  limits: {
+    fieldSize: 8 * 1024 * 1024
+  }
+});
+
 // @route   POST api/users/signup
 // @desc    Register User route
 // @access  Public
-router.post("/signup", async (req, res) => {
+router.post("/signup", upload.single("artifactfile"), async (req, res) => {
   const returnData = messageFormat();
 
   const { errors, isValid } = validateRegisterInput(req.body);
@@ -61,7 +74,31 @@ router.post("/signup", async (req, res) => {
     return res.status(400).json({ ...returnData });
   }
 
-  // now create artifacts
+  // create artifact
+  let artifactData = { ...req.body };
+
+  if (!isEmpty(req.file)) {
+    artifactData.file = req.file;
+  }
+
+  let artifactCreateResult = await createArtifact(
+    foundUser.data.id,
+    artifactData
+  );
+
+  //check whether artifact got create or not
+  if (artifactCreateResult.isError) {
+    returnData.isError = false;
+    returnData.message =
+      "Your account got created successfully, but your information could not be saved!";
+    returnData.data = cleanUserData(foundUser.data);
+    return res.json(returnData);
+  } else {
+    returnData.isError = false;
+    returnData.message = "Your information was saved successfully!";
+    returnData.data = cleanUserData(foundUser.data);
+    return res.json(returnData);
+  }
 });
 
 module.exports = router;
