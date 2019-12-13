@@ -229,6 +229,7 @@ router.post("/verify", async (req, res) => {
 // @route   POST api/v1/users/passwdrecovery
 // @desc    Route for sending password recovery email
 // @access  Public
+// TODO: Incomplete code
 router.post("/passwdrecovery", async (req, res) => {
   const returnData = messageFormat();
   const { errors, isValid } = validateForgotPasswdInput(req.body);
