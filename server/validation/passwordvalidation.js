@@ -1,5 +1,5 @@
 const Validator = require("validator");
-const isEmpty = require("./is-empty");
+const { isEmpty } = require("../utils");
 
 const owasp = require("owasp-password-strength-test");
 owasp.config({

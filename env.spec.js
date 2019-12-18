@@ -1,5 +1,5 @@
-// This file is to test whether .env file is available
-// and proper environment variables are configured or not
+// This test is to validate whether .env file is available
+// and proper environment variables are being loaded and configured or not
 
 const { expect } = require("chai");
 const app = require("./app");
@@ -7,7 +7,7 @@ const app = require("./app");
 describe(".env and Environment Variables", () => {
   let originalNodeENV = process.env.NODE_ENV;
 
-  describe("Production environment variable", () => {
+  describe("Production Environment ", () => {
     before(() => {
       process.env.NODE_ENV = "production";
     });
@@ -21,16 +21,22 @@ describe(".env and Environment Variables", () => {
     after(() => {
       process.env.NODE_ENV = originalNodeENV;
     });
+
+    describe("Environment variables", envirnVariablesTestCases);
   });
 
-  describe("Testing environment variable", () => {
+  describe("Testing Environment ", () => {
     it("NODE_ENV is defined and has value as 'test", () => {
       expect(process.env.NODE_ENV).to.be.a("string");
       expect(process.env.NODE_ENV).to.equal("test");
       expect(process.env.NODE_ENV).to.not.equal("production");
     });
-  });
 
+    describe("Environment variables", envirnVariablesTestCases);
+  });
+});
+
+function envirnVariablesTestCases() {
   it("PORT is defined and has some value", () => {
     expect(process.env.PORT).to.not.equal(undefined);
     expect(process.env.PORT).to.be.a("string");
@@ -70,4 +76,4 @@ describe(".env and Environment Variables", () => {
     expect(process.env.CACHE_TTL).to.not.equal(undefined);
     expect(process.env.CACHE_TTL).to.be.a("string");
   });
-});
+}

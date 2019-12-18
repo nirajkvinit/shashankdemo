@@ -1,5 +1,5 @@
 const Validator = require("validator");
-const isEmpty = require("./is-empty");
+const { isEmpty } = require("../utils");
 
 module.exports = function emailVerificationValidation(data) {
   // console.log(data);

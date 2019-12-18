@@ -3,7 +3,7 @@
 const NodeCache = require("node-cache");
 
 class Cache {
-  constructor(ttlSeconds) {
+  constructor(ttlSeconds = 60) {
     this.cache = new NodeCache({
       stdTTL: ttlSeconds,
       checkperiod: ttlSeconds * 0.2,
