@@ -68,4 +68,4 @@ require("./server/config/passport")(passport);
 // Auth and Users API
 app.use("/api/v1/users", usersRouter);
 
-module.exports = server;
+module.exports = app;

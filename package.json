@@ -7,9 +7,10 @@
     "production": "NODE_ENV=production node ./bin/www",
     "start": "NODE_ENV=production node ./bin/www",
     "developer": "NODE_ENV=development nodemon ./bin/www",
-    "test": "NODE_ENV=test mocha './**/*.spec.js' --exit",
+    "test": "NODE_ENV=test mocha './**/*.spec.js' --exit --timeout 15000",
     "todo": "leasot 'server/**/*.js'",
-    "todo-ci": "leasot -x --reporter markdown 'server/**/*.js' > TODO.md"
+    "todo-ci": "leasot -x --reporter markdown 'server/**/*.js' > TODO.md",
+    "coverage": "nyc --reporter=html --reporter=text npm run test"
   },
   "keywords": [],
   "author": "Niraj Kumar - nirajkvinit@gmail.com",
@@ -43,6 +44,7 @@
     "leasot": "^9.3.1",
     "mocha": "^6.2.2",
     "nodemon": "^2.0.1",
+    "nyc": "^14.1.1",
     "sinon": "^7.5.0",
     "supertest": "^4.0.2"
   }
