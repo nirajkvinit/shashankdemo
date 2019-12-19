@@ -18,10 +18,6 @@ describe("validations module", () => {
     expect(index.passwordValidation).to.be.an("Function");
   });
 
-  it("should export a function named 'profileFieldsValidation' ", () => {
-    expect(index.profileFieldsValidation).to.be.an("Function");
-  });
-
   it("should export a function named 'updatePasswordValidation' ", () => {
     expect(index.updatePasswordValidation).to.be.a("Function");
   });

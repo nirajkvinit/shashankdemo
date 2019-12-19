@@ -23,13 +23,8 @@ describe("emailVerificationValidation", () => {
     isValid: false
   };
 
-  it("should reject all input and return error if unexpected or no input provided", () => {
+  it("should reject if input is not an object", () => {
     expect(emailVerificationValidation()).to.deep.equal(errorOutput2);
-
-    expect(JSON.stringify(emailVerificationValidation())).to.equal(
-      JSON.stringify(errorOutput2)
-    );
-
     expect(emailVerificationValidation("random")).to.deep.equal(errorOutput2);
 
     expect(emailVerificationValidation(545454)).to.deep.equal(errorOutput2);
@@ -37,11 +32,15 @@ describe("emailVerificationValidation", () => {
     expect(emailVerificationValidation("*%&#%$^dgfg4586")).to.deep.equal(
       errorOutput2
     );
+  });
 
+  it("should reject if input object does not have 'verificationkey' property", () => {
     expect(emailVerificationValidation({ fruit: "apple" })).to.deep.equal(
       errorOutput
     );
+  });
 
+  it("should reject if 'verificationkey' is not a string", () => {
     expect(emailVerificationValidation({ verificationkey: 123 })).to.deep.equal(
       errorOutput
     );
@@ -50,7 +49,16 @@ describe("emailVerificationValidation", () => {
       emailVerificationValidation({ verificationkey: true })
     ).to.deep.equal(errorOutput);
 
-    // should not accept input having less than 5 characters
+    expect(emailVerificationValidation({ verificationkey: [] })).to.deep.equal(
+      errorOutput
+    );
+
+    expect(emailVerificationValidation({ verificationkey: {} })).to.deep.equal(
+      errorOutput
+    );
+  });
+
+  it("should reject if length of 'verificationkey' is less than 5", () => {
     expect(
       emailVerificationValidation({ verificationkey: "321" })
     ).to.deep.equal(errorOutput);
