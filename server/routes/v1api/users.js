@@ -12,13 +12,15 @@ const {
   getUserSecret,
   jwtSigner
 } = require("../../utils");
+
 const logger = getLogger("routes/v1api/users");
 
-//load input validation for register route
-const validateRegisterInput = require("../../validation/register");
-const validateLoginInput = require("../../validation/login");
-const emailVerificationValidation = require("../../validation/emailverification");
-const validateForgotPasswdInput = require("../../validation/forgotpassword");
+const {
+  signupFieldsValidation,
+  loginFieldsValidation,
+  emailVerificationValidation,
+  forgotPasswordValidation
+} = require("../../validations");
 
 //Load User Model
 const User = require("../../models/User");
@@ -46,7 +48,7 @@ const upload = multer({
 router.post("/signup", upload.single("artifactfile"), async (req, res) => {
   const returnData = messageFormat();
 
-  const { errors, isValid } = validateRegisterInput(req.body);
+  const { errors, isValid } = signupFieldsValidation(req.body);
 
   // check validation
   if (!isValid) {
@@ -114,7 +116,7 @@ router.post("/signup", upload.single("artifactfile"), async (req, res) => {
 // @access  Public
 router.post("/signin", async (req, res) => {
   const returnData = messageFormat();
-  const { errors, isValid } = validateLoginInput(req.body);
+  const { errors, isValid } = loginFieldsValidation(req.body);
   const { email, password } = req.body;
   let foundUser = null;
   let isPasswordMatched = false;
@@ -232,7 +234,7 @@ router.post("/verify", async (req, res) => {
 // TODO: Incomplete code
 router.post("/passwdrecovery", async (req, res) => {
   const returnData = messageFormat();
-  const { errors, isValid } = validateForgotPasswdInput(req.body);
+  const { errors, isValid } = forgotPasswordValidation(req.body);
   const { email } = req.body;
   let foundUser = null;
 

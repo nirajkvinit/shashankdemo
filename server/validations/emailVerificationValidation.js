@@ -2,14 +2,22 @@ const Validator = require("validator");
 const { isEmpty } = require("../utils");
 
 module.exports = function emailVerificationValidation(data) {
-  // console.log(data);
   let errors = {};
 
-  data.verificationkey = !isEmpty(data.verificationkey)
-    ? data.verificationkey
-    : "";
+  if (isEmpty(data) || typeof data !== "object") {
+    errors.message = "Invalid input!";
+    return {
+      errors,
+      isValid: isEmpty(errors)
+    };
+  }
 
-  if (Validator.isEmpty(data.verificationkey)) {
+  data.verificationkey =
+    !isEmpty(data.verificationkey) && typeof data.verificationkey === "string"
+      ? data.verificationkey
+      : "";
+
+  if (isEmpty(data.verificationkey)) {
     errors.message = "Verification key is invalid!";
   }
 

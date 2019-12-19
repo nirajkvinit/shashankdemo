@@ -1,6 +1,6 @@
 const Validator = require("validator");
 const { isEmpty } = require("../utils");
-const passwordValidation = require("./passwordvalidation");
+const passwordValidation = require("./passwordValidation");
 
 module.exports = function userPasswordValidation(data) {
   let errors = {};
