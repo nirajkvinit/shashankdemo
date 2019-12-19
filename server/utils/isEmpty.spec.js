@@ -3,7 +3,7 @@ const { expect } = require("chai");
 const { isEmpty } = require("./index");
 
 describe("isEmpty function", () => {
-  describe("should return true for", () => {
+  describe("should return true (for falsy values)", () => {
     it("'undefined' as given parameter", () => {
       expect(isEmpty(undefined)).to.be.true;
     });

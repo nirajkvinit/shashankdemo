@@ -1,5 +1,4 @@
 const isEmpty = require("./isEmpty");
-const Cache = require("./cache");
 const messageFormat = require("./messageFormat");
 const jwtSigner = require("./jwtSigner");
 const getLogger = require("./getLogger");
@@ -16,7 +15,6 @@ let imageExt = "ai,.bmp,.gif,.ico,.jpeg,.jpg,.png,.ps,.psd,.svg,.tif,.tiff".spli
 module.exports = {
   isEmpty,
   getLogger,
-  Cache,
   messageFormat,
   docExt,
   musicExt,

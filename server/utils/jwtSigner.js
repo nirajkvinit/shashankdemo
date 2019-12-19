@@ -9,16 +9,21 @@ const isEmpty = require("./isEmpty");
  * @return {Promise<string>} signed json web token
  */
 const jwtSigner = function(payload, userSecret, expiresIn) {
+  let invalidInputErr = new Error("Invalid input");
+
   return new Promise(function(resolve, reject) {
-    jwt.sign(payload, userSecret, { expiresIn }, (err, token) => {
-      if (!isEmpty(err)) {
-        reject(new Error("Invalid input"));
-      } else if (isEmpty(token)) {
-        reject(new Error("Invalid input"));
-      } else {
-        resolve(token);
-      }
-    });
+    if (isEmpty(payload) || isEmpty(userSecret) || isEmpty(expiresIn)) {
+      reject(invalidInputErr);
+    } else {
+      jwt.sign(payload, userSecret, { expiresIn }, (err, token) => {
+        if (isEmpty(token)) {
+          console.log(err);
+          reject(invalidInputErr);
+        } else {
+          resolve(token);
+        }
+      });
+    }
   });
 };
 

@@ -25,8 +25,6 @@ const usersRouter = require("./server/routes/v1api/users");
 const { isEmpty, Cache, getLogger } = require("./server/utils");
 const logger = getLogger("main-app"); // get logger
 
-// Initialize cache
-const cache = new Cache(process.env.CACHE_TTL); // Create a new cache service instance
 // Initialize global event emitter
 const evtEmitter = new events.EventEmitter();
 
@@ -48,14 +46,14 @@ app
   )
   .use(passport.initialize()) // initialize passport
   .use((req, res, next) => {
-    // cache middlware
-    req.cache = cache;
     // event emitter middlware
     req.evtEmitter = evtEmitter;
     // pass socket conn
     req.io = io;
     next();
   });
+
+// TODO: Add cache system (Maybe include redis with expiring key)
 
 // API Identifier and activity checker whether it is up or not
 app.get("/", (req, res) =>
