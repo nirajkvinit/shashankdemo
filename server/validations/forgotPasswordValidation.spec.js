@@ -13,44 +13,69 @@ describe("forgotPasswordValidation", () => {
     isValid: true
   };
 
-  let errorOutput = {
-    errors: { email: "Invalid input!" },
+  let invalidInputError = {
+    errors: { email: "Invalid input" },
     isValid: false
   };
 
-  let errorOutput2 = {
+  let emailRequiredError = {
     errors: { email: "Email field is required" },
     isValid: false
   };
 
-  let errorOutput3 = {
+  let invalidEmailError = {
     errors: { email: "Email is invalid" },
     isValid: false
   };
 
-  it("TODO: Refactor test cases");
+  it("should reject if input is not an object", () => {
+    let incorrectInput = [
+      "randomString",
+      "",
+      54524545,
+      true,
+      false,
+      "KJHGI^&76*^*%%#@"
+    ];
 
-  it("should reject all input and return error if unexpected or no input provided", () => {
-    expect(forgotPasswordValidation()).to.deep.equal(errorOutput);
-    expect(JSON.stringify(forgotPasswordValidation())).to.equal(
-      JSON.stringify(errorOutput)
+    incorrectInput.forEach(item =>
+      expect(forgotPasswordValidation(item)).to.deep.equal(invalidInputError)
     );
-    expect(forgotPasswordValidation("random")).to.deep.equal(errorOutput);
-    expect(forgotPasswordValidation(545454)).to.deep.equal(errorOutput);
-    expect(forgotPasswordValidation("*%&#%$^dgfg4586")).to.deep.equal(
-      errorOutput
+  });
+
+  it("should reject if input object does not have 'email' property ", () => {
+    let incorrectInput = [
+      { verificationkey: 123 },
+      { verificationkey: true },
+      { verificationkey: [] },
+      { fruit: "apple" }
+    ];
+
+    incorrectInput.forEach(item =>
+      expect(forgotPasswordValidation(item)).to.deep.equal(emailRequiredError)
     );
-    expect(forgotPasswordValidation({ fruit: "apple" })).to.deep.equal(
-      errorOutput2
+  });
+
+  it("should reject if 'email' property of input object is not a string", () => {
+    let incorrectInput = [
+      { email: 123 },
+      { email: true },
+      { email: [] },
+      { email: [1, 2] },
+      { email: {} },
+      { email: { test: "test" } }
+    ];
+
+    incorrectInput.forEach(item =>
+      expect(forgotPasswordValidation(item)).to.deep.equal(emailRequiredError)
     );
-    expect(forgotPasswordValidation({ email: 123 })).to.deep.equal(
-      errorOutput2
-    );
-    expect(forgotPasswordValidation({ email: true })).to.deep.equal(
-      errorOutput2
-    );
-    expect(forgotPasswordValidation({ email: "@apple.com" })).to.deep.equal(
-      errorOutput3
+  });
+
+  it("should reject if input object's email proper does not have valid email address", () => {
+    let incorrectInput = [{ email: "apple" }, { email: "apple@banana" }];
+
+    incorrectInput.forEach(item =>
+      expect(forgotPasswordValidation(item)).to.deep.equal(invalidEmailError)
     );
   });
 
