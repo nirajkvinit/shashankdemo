@@ -28,6 +28,8 @@ describe("forgotPasswordValidation", () => {
     isValid: false
   };
 
+  it("TODO: Refactor test cases");
+
   it("should reject all input and return error if unexpected or no input provided", () => {
     expect(forgotPasswordValidation()).to.deep.equal(errorOutput);
     expect(JSON.stringify(forgotPasswordValidation())).to.equal(

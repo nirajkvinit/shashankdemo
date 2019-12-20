@@ -14,47 +14,35 @@ describe("emailVerificationValidation", () => {
   };
 
   let errorOutput = {
-    errors: { message: "Verification key is invalid!" },
-    isValid: false
-  };
-
-  let errorOutput2 = {
-    errors: { message: "Invalid input!" },
+    errors: { message: "Invalid input or verification key is invalid" },
     isValid: false
   };
 
   it("should reject if input is not an object", () => {
-    expect(emailVerificationValidation()).to.deep.equal(errorOutput2);
-    expect(emailVerificationValidation("random")).to.deep.equal(errorOutput2);
+    let incorrectInput = [
+      "randomString",
+      "",
+      54524545,
+      true,
+      false,
+      "KJHGI^&76*^*%%#@"
+    ];
 
-    expect(emailVerificationValidation(545454)).to.deep.equal(errorOutput2);
-
-    expect(emailVerificationValidation("*%&#%$^dgfg4586")).to.deep.equal(
-      errorOutput2
+    incorrectInput.forEach(item =>
+      expect(emailVerificationValidation(item)).to.deep.equal(errorOutput)
     );
   });
 
-  it("should reject if input object does not have 'verificationkey' property", () => {
-    expect(emailVerificationValidation({ fruit: "apple" })).to.deep.equal(
-      errorOutput
-    );
-  });
+  it("should reject if input object does not have 'verificationkey' property having string value", () => {
+    let incorrectInput = [
+      { verificationkey: 123 },
+      { verificationkey: true },
+      { verificationkey: [] },
+      { fruit: "apple" }
+    ];
 
-  it("should reject if 'verificationkey' is not a string", () => {
-    expect(emailVerificationValidation({ verificationkey: 123 })).to.deep.equal(
-      errorOutput
-    );
-
-    expect(
-      emailVerificationValidation({ verificationkey: true })
-    ).to.deep.equal(errorOutput);
-
-    expect(emailVerificationValidation({ verificationkey: [] })).to.deep.equal(
-      errorOutput
-    );
-
-    expect(emailVerificationValidation({ verificationkey: {} })).to.deep.equal(
-      errorOutput
+    incorrectInput.forEach(item =>
+      expect(emailVerificationValidation(item)).to.deep.equal(errorOutput)
     );
   });
 
