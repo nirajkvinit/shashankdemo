@@ -1,7 +1,7 @@
 const Validator = require("validator");
 const { isEmpty } = require("../utils");
 
-module.exports = function validateLoginInput(data) {
+module.exports = function loginFieldsValidation(data) {
   let errors = {};
 
   if (isEmpty(data) || typeof data !== "object") {

@@ -1,17 +1,20 @@
 const Validator = require("validator");
 const { isEmpty } = require("../utils");
 
-module.exports = function validateRegisterInput(data) {
+module.exports = function signupFieldsValidation(data) {
   let errors = {};
 
-  data.email = !isEmpty(data.email) ? data.email : "";
+  if (isEmpty(data) || typeof data !== "object") {
+    errors.email = "Invalid input";
+  } else {
+    data.email =
+      !isEmpty(data.email) && typeof data.email === "string" ? data.email : "";
 
-  if (Validator.isEmpty(data.email)) {
-    errors.email = "Email field is required";
-  }
-
-  if (!Validator.isEmail(data.email)) {
-    errors.email = "Email is invalid";
+    if (isEmpty(data.email)) {
+      errors.email = "Email field is required";
+    } else if (!Validator.isEmail(data.email)) {
+      errors.email = "Email is invalid";
+    }
   }
 
   return {

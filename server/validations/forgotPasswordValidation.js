@@ -1,7 +1,7 @@
 const Validator = require("validator");
 const { isEmpty } = require("../utils");
 
-module.exports = function validateForgotPasswdInput(data) {
+module.exports = function forgotPasswordValidation(data) {
   let errors = {};
 
   if (isEmpty(data) || typeof data !== "object") {
@@ -12,18 +12,8 @@ module.exports = function validateForgotPasswdInput(data) {
 
     if (isEmpty(data.email)) {
       errors.email = "Email field is required";
-      return {
-        errors,
-        isValid: isEmpty(errors)
-      };
-    }
-
-    if (!Validator.isEmail(data.email)) {
+    } else if (!Validator.isEmail(data.email)) {
       errors.email = "Email is invalid";
-      return {
-        errors,
-        isValid: isEmpty(errors)
-      };
     }
   }
 
