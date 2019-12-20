@@ -4,7 +4,6 @@ const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
 const compression = require("compression");
-const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 
@@ -19,6 +18,9 @@ if (process.env.NODE_ENV === "production") {
 
 // APP_DIR Global variable
 global.APP_DIR = path.join(__dirname, "./");
+
+// load db connection
+const db = require("./db");
 
 const usersRouter = require("./server/routes/v1api/users");
 
@@ -48,8 +50,6 @@ app
   .use((req, res, next) => {
     // event emitter middlware
     req.evtEmitter = evtEmitter;
-    // pass socket conn
-    req.io = io;
     next();
   });
 
